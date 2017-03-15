@@ -1,0 +1,108 @@
+<h1>Edit Film</h1>
+<hr>
+<div class="col-md-6">
+    <form [formGroup]="filmEditForm" (ngSubmit)="editFilm(filmEditForm.value)">
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-success" [disabled]="!filmEditForm.valid">Save</button>
+          <a class="btn btn-danger" (click)="cancel()">Cancel</a>
+        </div>
+      </div>
+      <br>
+      
+      <div class="row">
+        <div class="col-xs-12" [ngClass]="{'error': filmEditForm.controls.filmTitle?.invalid && filmEditForm.controls.filmTitle?.touched}">
+          <div class="form-group">
+            <label for="filmTitle">Title</label>
+            <em *ngIf="filmEditForm.controls.filmTitle?.invalid && (filmEditForm.controls.filmTitle?.touched)">Required</em>
+            <input type="text" 
+                   id="filmTitle" 
+                   class="form-control"
+                   formControlName="filmTitle">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12" [ngClass]="{'error': filmEditForm.controls.description?.invalid && filmEditForm.controls.description?.touched}">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <em *ngIf="filmEditForm.controls.description?.invalid && (filmEditForm.controls.description?.touched)">Required</em>
+            <textarea type="text" 
+                      name="description" 
+                      id="description" 
+                      cols="15" 
+                      rows="6" 
+                      class="form-control"
+                      formControlName="description">
+            </textarea>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-xs-12" [ngClass]="{'error': filmEditForm.controls.imageUrl?.invalid && filmEditForm.controls.imageUrl?.touched}">
+          <div class="form-group">
+            <label for="image-url">Bild Url</label>
+            <em *ngIf="filmEditForm.controls.imageUrl?.invalid && (filmEditForm.controls.imageUrl?.touched)">Required</em>
+            <input type="text" 
+                   id="image-url" 
+                   class="form-control"
+                   formControlName="imageUrl"
+                   #imageUrl>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="img">
+            <img style="max-width: 300px; max-height: 300px;" [src]="imageUrl.value">
+          </div>
+        </div>
+      </div>
+
+
+       <div class="row" style="margin-top:15px;">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <em *ngIf="filmEditForm.controls.category?.invalid && (filmEditForm.controls.category?.touched)">Required</em>
+            <select class="form-control" formControlName="category" id="category" name="category" >
+              <option value="default">Välj Kategori...</option>
+              <option  *ngFor="let category of keys()">                  
+                  {{category}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12" [ngClass]="{'error': filmEditForm.controls.resourceUrl?.invalid && filmEditForm.controls.resourceUrl?.touched}">
+          <div class="form-group">
+            <label for="resourceUrl">Video Url</label>
+            <em *ngIf="filmEditForm.controls.resourceUrl?.invalid && (filmEditForm.controls.resourceUrl?.touched)">Required</em>
+            <input type="text" 
+                   id="resourceUrl" 
+                   class="form-control"
+                   formControlName="resourceUrl">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12" [ngClass]="{'error': filmEditForm.controls.length?.invalid && filmEditForm.controls.length?.touched}">
+          <div class="form-group">
+            <label for="length">Length</label>
+            <em *ngIf="filmEditForm.controls.length?.invalid && (filmEditForm.controls.length?.touched)">Required</em>
+            <input type="text" 
+                   id="length" 
+                   class="form-control"
+                   formControlName="length">
+          </div>
+        </div>
+      </div>     
+     
+    </form>
+    
+</div>

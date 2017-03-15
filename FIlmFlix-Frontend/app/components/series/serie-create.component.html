@@ -1,0 +1,78 @@
+<h1>New Serie</h1>
+<hr>
+<div class="col-md-6">
+<form [formGroup]="serieForm" (ngSubmit)="saveSerie(serieForm.value)">
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-success" [disabled]="!serieForm.valid">Save</button>
+          <a class="btn btn-danger" (click)="cancel()">Cancel</a>
+        </div>
+      </div>
+      <br>
+      
+      <div class="row">
+        <div class="col-xs-12" [ngClass]="{'error': serieForm.controls.serieTitle?.invalid && serieForm.controls.serieTitle?.touched}">
+          <div class="form-group">
+            <label for="serieTitle">Title</label>
+            <em *ngIf="serieForm.controls.serieTitle?.invalid && (serieForm.controls.serieTitle?.touched)">Required</em>
+            <input type="text" 
+                   id="serieTitle" 
+                   class="form-control"
+                   formControlName="serieTitle">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12" [ngClass]="{'error': serieForm.controls.description?.invalid && serieForm.controls.description?.touched}">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <em *ngIf="serieForm.controls.description?.invalid && (serieForm.controls.description?.touched)">Required</em>
+            <textarea type="text" 
+                      name="description" 
+                      id="description" 
+                      cols="15" 
+                      rows="6" 
+                      class="form-control"
+                      formControlName="description">
+            </textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12" [ngClass]="{'error': serieForm.controls.imageUrl?.invalid && serieForm.controls.imageUrl?.touched}">
+          <div class="form-group">
+            <label for="image-url">Bild Url</label>
+            <em *ngIf="serieForm.controls.imageUrl?.invalid && (serieForm.controls.imageUrl?.touched)">Required</em>
+            <input type="text" 
+                   id="image-url" 
+                   class="form-control"
+                   formControlName="imageUrl"
+                   #imageUrl>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="img">
+            <img style="max-width: 300px; max-height: 300px;" [src]="imageUrl.value">
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <em *ngIf="serieForm.controls.category?.invalid && (serieForm.controls.category?.touched)">Required</em>
+            <select class="form-control" formControlName="category" id="category" name="category" >
+              <option value="default">Välj Kategori...</option>
+              <option  *ngFor="let category of keys()">                  
+                  {{category}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+</div>

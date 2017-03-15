@@ -1,0 +1,68 @@
+<div class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+        aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" [routerLink]="['/']">FilmFlix</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a [routerLink]="['/series']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">All Series</a></li>
+        <li><a [routerLink]="['/films']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">All Films</a></li>
+        <li><a *ngIf="!auth.isAuthenticated()" [routerLink]="['/admin/login']">Login</a></li>
+        <li *ngIf="auth.isAuthenticated()" class="dropdown navbar-right">
+          <a class="dropdown-toggle" data-toggle="dropdown">
+              Welcome {{auth.admin.firstName}}
+              <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a [routerLink]="['/admin']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Edit Profile</a>
+              <li><a [routerLink]="['/series/new']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Create Serie</a></li>
+              <li><a [routerLink]="['/films/new']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Create Film</a></li>
+          </ul>
+          </li>
+      </ul>
+      <form id="searchForm" (ngSubmit)="searchVideos(searchTerm)" class="navbar-form navbar-right">
+        <div class="form-group">
+          <input [(ngModel)]="searchTerm" 
+                 name="searchTerm" 
+                 type="text" 
+                 class="form-control" 
+                 placeholder="Search Videos">
+        </div>
+        <button class="btn btn-default" modal-trigger="searchResults"> Search</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--Button trigger modal-trigger.directive that open the modal that is bind to searchResults. 
+    Then searchResults bind content from search-modal selector to elementId.
+    Then elementId is passed to search-modal.component and render the content in ng-content-->
+<search-modal elementId="searchResults" title="Matching Films">
+  <div class="list-group">
+    <a class="list-group-item" 
+       *ngFor="let film of foundfilms"
+       [routerLink]="['/films', film.filmTitle]">
+       {{film.filmTitle}}
+       <img class="img-responsive" 
+            [src]="film?.imageUrl" 
+            [alt]="film?.filmTitle" 
+            style="max-height: 75px; max-width: 50px;">
+    </a>
+    <a class="list-group-item" 
+       *ngFor="let serie of foundseries"
+       [routerLink]="['/series', serie.serieTitle]">
+       {{serie.serieTitle}}
+       <img class="img-responsive" 
+            [src]="serie?.imageUrl" 
+            [alt]="serie?.serieTitle" 
+            style="max-height: 75px; max-width: 50px;">
+    </a>
+  </div>
+</search-modal>

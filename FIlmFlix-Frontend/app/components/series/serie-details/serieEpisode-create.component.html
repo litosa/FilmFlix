@@ -1,0 +1,53 @@
+<h1>New Episode</h1>
+<hr>
+<div class="col-md-6">
+<form [formGroup]="episodeForm" (ngSubmit)="saveEpisode(episodeForm.value)">
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-success" [disabled]="!episodeForm.valid">Save</button>
+          <a class="btn btn-danger" (click)="cancel()">Cancel</a>
+        </div>
+      </div>
+      <br>
+
+      <div class="row">
+        <div class="col-xs-12" [ngClass]="{'error': episodeForm.controls.episodeTitle?.invalid && episodeForm.controls.episodeTitle?.touched}">
+          <div class="form-group">
+            <label for="episodeTitle">Title</label>
+            <em *ngIf="episodeForm.controls.episodeTitle?.invalid && (episodeForm.controls.episodeTitle?.touched)">Required</em>
+            <input type="text" 
+                   id="episodeTitle" 
+                   class="form-control"
+                   formControlName="episodeTitle">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12" [ngClass]="{'error': episodeForm.controls.resourceUrl?.invalid && episodeForm.controls.resourceUrl?.touched}">
+          <div class="form-group">
+            <label for="resourceUrl">Video Url</label>
+            <em *ngIf="episodeForm.controls.resourceUrl?.invalid && (episodeForm.controls.resourceUrl?.touched)">Required</em>
+            <input type="text" 
+                   id="resourceUrl" 
+                   class="form-control"
+                   formControlName="resourceUrl">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12" [ngClass]="{'error': episodeForm.controls.length?.invalid && episodeForm.controls.length?.touched}">
+          <div class="form-group">
+            <label for="length">Length</label>
+            <em *ngIf="episodeForm.controls.length?.invalid && (episodeForm.controls.length?.touched)">Required</em>
+            <input type="text" 
+                   id="length" 
+                   class="form-control"
+                   formControlName="length">
+          </div>
+        </div>
+      </div>
+
+    </form>
+</div>

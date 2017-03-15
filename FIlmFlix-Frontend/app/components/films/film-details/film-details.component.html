@@ -1,0 +1,40 @@
+<div class="container clearfix" style="margin-top: 25px; margin-bottom: 25px;">
+    
+    <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            <h2>{{filteredFilm?.filmTitle}} </h2>
+            <div>
+                <img [src]="filteredFilm?.imageUrl" 
+                     [alt]="filteredFilm?.filmTitle" 
+                     style="max-height: 500px; max-width: 200px;">
+            </div>                 
+        </div>    
+        <div class="pull-right col-xs-12 col-sm-6" style="padding-top: 75px;">
+            <video width="400px" height="255px" controls="controls" autoplay loop id="bgvid">
+                <source [src]="filteredFilm?.resourceUrl" type="video/mp4" />
+            </video>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="auth.isAuthenticated()">
+        <div class="col-sm-6" style="margin-top: 15px; margin-bottom: 15px;">
+            <a class="btn btn-warning" (click)="editFilm()">Edit Film</a>
+        </div>
+    </div>  
+    
+    <div class="row">
+        <div class="col-sm-6" style="margin-top: 25px; margin-bottom: 25px;">             
+            <div><strong>Description:</strong> <p>{{filteredFilm?.description}}</p></div>
+            <div><strong>Length:</strong> <p>{{filteredFilm?.length}} min</p></div>                                  
+            <div><strong>Category:</strong> {{filmCategory}}</div>
+            <div><strong>Voters:</strong> {{filteredFilm?.voters}}</div>
+            <div><strong>Published:</strong> <i>{{filteredFilm?.published | date}}</i></div>
+        </div>
+    </div>
+
+    <edit-film *ngIf="editMode" 
+                  [filteredFilm] = "filteredFilm"
+                  (editCurrentFilm)="editCurrentFilm($event)" 
+                  (cancelEditFilm)="cancelEditFilm()">
+    </edit-film>
+</div>

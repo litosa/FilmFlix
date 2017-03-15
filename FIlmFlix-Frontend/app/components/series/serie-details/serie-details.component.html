@@ -1,0 +1,67 @@
+<div class="container clearfix" style="margin-top: 25px; margin-bottom: 25px;">
+  
+    <div class="row">
+        <div class="col-xs-12 col-sm-4">
+            <h2>{{filteredSerie?.serieTitle}} </h2>
+            <div>
+                <img [src]="filteredSerie?.imageUrl" 
+                     [alt]="filteredSerie?.serieTitle" 
+                     style="max-height: 500px; max-width: 300px;">
+            </div>   
+        </div>
+        <div class="pull-right col-xs-12 col-sm-6" style="margin-top: 25px;">
+            <div class="col-sm-4 col-md-3">
+                <serie-episode [serieEpisode]="filteredEpisodeBySerie"></serie-episode>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="auth.isAuthenticated()">
+        <div class="col-sm-6" style="margin-top: 15px; margin-bottom: 15px;">
+            <a class="btn btn-success" (click)="addEpisode()">Add Episode</a>
+            <span><a class="btn btn-warning" (click)="editSerie()">Edit Serie</a></span>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!addMode && !editMode">
+        <div class="col-sm-6" style="margin-top: 15px; margin-bottom: 15px;">
+            <div><strong>Description:</strong> <p>{{filteredSerie?.description}}</p></div>
+            <div><strong>Category:</strong> {{serieCategory}}</div>
+            <div><strong>Voters:</strong> {{filteredSerie?.voters}}</div>
+        </div>
+        <div class="col-sm-6" style="margin-top: 25px; margin-bottom: 25px;">
+            <strong>Episodes:</strong><hr />
+
+            <ul *ngFor="let serieEpisode of filteredSerie.serieEpisodes; let i = index" class="list-group">
+                <li class="list-group-item btn btn-default" (click)="selectEpisode(serieEpisode.episodeTitle)">
+                    
+                        {{serieEpisode?.episodeTitle}} -
+                        {{serieEpisode?.length}} min |
+                        <i>{{serieEpisode?.published | date}}</i>
+                    <div *ngIf="auth.isAuthenticated()">
+                        <span><a class="btn btn-warning" (click)="editEpisode(serieEpisode.episodeTitle)">Edit Episode</a></span>
+                        <span><a class="btn btn-danger" (click)="deleteEpisode(i)">Delete Episode</a></span>
+                    </div>                   
+                    
+                </li>              
+            </ul>
+        </div>
+    </div>
+
+    <create-episode *ngIf="addMode" 
+                    (saveNewEpisode)="saveNewEpisode($event)" 
+                    (cancelNewEpisode)="cancelNewEpisode()">
+    </create-episode>
+    <edit-episode *ngIf="editMode" 
+                  [serieEpisode] = "filteredEditEpisodeBySerie"
+                  (editCurrentEpisode)="editCurrentEpisode($event)" 
+                  (cancelEditEpisode)="cancelEditEpisode()">
+    </edit-episode>
+    <edit-serie *ngIf="editSerieMode" 
+                  [filteredSerie] = "filteredSerie"
+                  (editCurrentSerie)="editCurrentSerie($event)" 
+                  (cancelEditSerie)="cancelEditSerie()">
+    </edit-serie>
+
+</div>
+
