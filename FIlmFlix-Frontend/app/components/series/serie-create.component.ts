@@ -21,8 +21,6 @@ import { Component, OnInit } from '@angular/core';
 
 export class SerieCreateComponent implements OnInit {
 
-    // serie: Serie;
-
     categories = Category;
     keys(): Array<string> {
         var keys = Object.keys(this.categories);

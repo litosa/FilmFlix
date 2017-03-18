@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,8 +11,6 @@ using FilmFlix.Interfaces;
 using FilmFlix.Repositories;
 using Newtonsoft.Json;
 using AutoMapper;
-using FilmFlix.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace FilmFlix
@@ -33,6 +28,7 @@ namespace FilmFlix
         }
 
         private IConfigurationRoot _config;
+
 
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)

@@ -66,7 +66,6 @@ export class FilmCreateComponent{
 
     saveFilm(formValues: Film) {
         this.filmService.saveFilm(formValues);
-        // this.filmService.saveFilmToDb();
         this.router.navigate(['/films']);
     }
 

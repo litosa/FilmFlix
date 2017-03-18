@@ -1,3 +1,4 @@
+import { HomepageComponent } from './components/common/homepage';
 import { LoginComponent } from './components/admin/login.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { FilmsComponent } from './components/films/films.component';
@@ -10,14 +11,14 @@ import { FILM_ROUTES } from './components/films/films.routes';
 
 const APP_ROUTES: Routes = [
 
+    { path: '', component: HomepageComponent },    
     { path: 'series', component: SeriesComponent, children:SERIE_ROUTES },
     { path: 'films', component: FilmsComponent, children:FILM_ROUTES },
     { path: 'admin', component: AdminComponent },
     { path: 'admin/login', component: LoginComponent },
     { path: '404', component: Error404Component },
-    { path: '**', component: SeriesComponent },
-    { path: '', redirectTo: '/', pathMatch: 'full' }
-
+    { path: '**', component: Error404Component },
+    // { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
 
 

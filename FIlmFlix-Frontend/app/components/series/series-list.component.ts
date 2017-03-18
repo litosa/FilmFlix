@@ -64,7 +64,10 @@ export class SeriesListComponent implements OnInit {
 
     ngOnInit() {
         this.series = this.serieService.series;
+        this.serieService.setSeriesToLocalStorage(this.series);
+
         this.filteredSeries = this.series.slice(0);
+        this.sortBy === this.sortBy ? this.filteredSeries.sort(sortByVotesDesc) : this.filteredSeries.sort(sortByNameAsc)
     }
 
     sortSeries(value: string) {

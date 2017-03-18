@@ -6,14 +6,12 @@ using FilmFlix.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FilmFlix.Controllers
 {
-    // events = filmer och serier
+    
     // session = filmer
     // session? = serier
     //Anger default route
@@ -98,13 +96,15 @@ namespace FilmFlix.Controllers
             return BadRequest();
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] FilmViewModel model)
+        [HttpPut("{title}")]
+        public async Task<IActionResult> Put(string title, [FromBody] FilmViewModel model)
         {
             try
             {
-                Film oldFilm = _repo.GetFilm(id);
-                if (oldFilm == null) return NotFound($"Could not find a film with an EpisodeId of {id}");
+                int filmIdByName = _repo.GetFilmIdByName(title).FilmId;
+
+                Film oldFilm = _repo.GetFilm(filmIdByName);
+                if (oldFilm == null) return NotFound($"Could not find a film with an EpisodeId of {filmIdByName}");
 
                 //Replaces the code below, Illustrate advantage of using mapping
                 _mapper.Map(model, oldFilm);
@@ -131,13 +131,14 @@ namespace FilmFlix.Controllers
             return BadRequest("Couldn´t update Film");
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{title}")]
+        public async Task<IActionResult> Delete(string title)
         {
             try
             {
-                Film oldFilm = _repo.GetFilm(id);
-                if (oldFilm == null) return NotFound($"Could not find Film with EpisodeId of {id}");
+                int filmIdByName = _repo.GetFilmIdByName(title).FilmId;
+                Film oldFilm = _repo.GetFilm(filmIdByName);
+                if (oldFilm == null) return NotFound($"Could not find Film with EpisodeId of {filmIdByName}");
 
                 _repo.Delete(oldFilm);
                 if (await _repo.SaveAllAsync())

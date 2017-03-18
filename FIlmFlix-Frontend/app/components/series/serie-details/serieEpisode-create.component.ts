@@ -31,24 +31,29 @@ export class CreateEpisodeComponent implements OnInit {
     private episodeTitle: FormControl;
     private resourceUrl: FormControl;
     private length: FormControl;
+    private published: FormControl;
+    private displayDate: any;
 
     constructor(private serieService: SerieService, private router: Router) { }
 
     ngOnInit() {
+        this.displayDate = new Date().toLocaleDateString();             
+        
         this.initForm();
     }
-
 
     initForm() {
         this.episodeTitle = new FormControl('', Validators.required);
         this.resourceUrl = new FormControl('', Validators.required);
         this.length = new FormControl('', Validators.required);
+        this.published = new FormControl(this.displayDate, Validators.required);
 
         //name, imageUrl etc matches formcontrol in html
         this.episodeForm = new FormGroup({
             episodeTitle: this.episodeTitle,
             resourceUrl: this.resourceUrl,
-            length: this.length
+            length: this.length,
+            published: this.published
         });
     }
 

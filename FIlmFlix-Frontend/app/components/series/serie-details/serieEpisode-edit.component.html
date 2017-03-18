@@ -10,6 +10,12 @@
       </div>
       <br>
 
+      <input type="text" 
+                   id="oldEpisodeTitle" 
+                   class="form-control"
+                   formControlName="oldEpisodeTitle"
+                   type="hidden">
+
       <div class="row">
         <div class="col-xs-12" [ngClass]="{'error': episodeForm.controls.episodeTitle?.invalid && episodeForm.controls.episodeTitle?.touched}">
           <div class="form-group">

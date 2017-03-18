@@ -15,18 +15,12 @@ namespace FilmFlix.Interfaces
         //Film
         IEnumerable<Film> GetAllFilms();
         Film GetFilm(int id);
+        Film GetFilmIdByName(string title);
 
         //Serie
         IEnumerable<Serie> GetAllSeries();
         Serie GetSerie(int id);
-
-        //SerieEpisodes
-        //IEnumerable<SerieEpisodes> GetSectionsBySerie(string title);
-        //IEnumerable<SerieEpisodes> GetSerieSections();
-
-
-        //SerieEpisodes
-        //IEnumerable<SerieEpisodes> GetSerieSections(int serieId);
-        //SerieEpisodes GetSerieSection(int serieSectionId);
+        Serie GetSerieIdByName(string title);
+        
     } 
 }

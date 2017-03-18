@@ -1,11 +1,7 @@
 ﻿using FilmFlix.Enums;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace FilmFlix.Models
 {
@@ -19,10 +15,7 @@ namespace FilmFlix.Models
         public Category Category { get; set; }
         public int Voters { get; set; }
 
-
-        //[ForeignKey("VideoCollectionId")]
-        //public VideoCollection VideoCollection { get; set; }
-        //public int VideoCollectionId { get; set; }
+        
 
         public ICollection<SerieEpisode> SerieEpisodes { get; set; }
     }

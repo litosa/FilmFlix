@@ -20,6 +20,7 @@
         <div class="col-sm-6" style="margin-top: 15px; margin-bottom: 15px;">
             <a class="btn btn-success" (click)="addEpisode()">Add Episode</a>
             <span><a class="btn btn-warning" (click)="editSerie()">Edit Serie</a></span>
+            <a *ngIf="auth.isAuthenticated()" class="btn btn-danger" (click)="deleteSerie()">Delete Serie</a>
         </div>
     </div>
 
@@ -32,7 +33,7 @@
         <div class="col-sm-6" style="margin-top: 25px; margin-bottom: 25px;">
             <strong>Episodes:</strong><hr />
 
-            <ul *ngFor="let serieEpisode of filteredSerie.serieEpisodes; let i = index" class="list-group">
+            <ul *ngFor="let serieEpisode of filteredSerie.serieEpisodes;" class="list-group">
                 <li class="list-group-item btn btn-default" (click)="selectEpisode(serieEpisode.episodeTitle)">
                     
                         {{serieEpisode?.episodeTitle}} -
@@ -40,7 +41,7 @@
                         <i>{{serieEpisode?.published | date}}</i>
                     <div *ngIf="auth.isAuthenticated()">
                         <span><a class="btn btn-warning" (click)="editEpisode(serieEpisode.episodeTitle)">Edit Episode</a></span>
-                        <span><a class="btn btn-danger" (click)="deleteEpisode(i)">Delete Episode</a></span>
+                        <span><a class="btn btn-danger" (click)="deleteEpisode(serieEpisode)">Delete Episode</a></span>
                     </div>                   
                     
                 </li>              

@@ -1,5 +1,4 @@
 ﻿using FilmFlix.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,6 +41,11 @@ namespace FilmFlix.Repositories
                            .FirstOrDefault();
         }
 
+        public Film GetFilmIdByName(string title)
+        {
+            return _context.Films.Where(f => f.FilmTitle == title).FirstOrDefault();
+        }
+
         public IEnumerable<Serie> GetAllSeries()
         {
             return _context.Series
@@ -58,19 +62,10 @@ namespace FilmFlix.Repositories
                            .FirstOrDefault();
         }
 
-        //public IEnumerable<SerieEpisodes> GetSerieSections()
-        //{
-        //    return _context.SerieEpisodes.ToList();
-        //}
-
-        //public IEnumerable<SerieEpisodes> GetSectionsBySerie(string titles)
-        //{
-        //    return _context.SerieEpisodes
-        //                   .Include(s => s.Serie)
-        //                   .Where(s => s.Serie.EpisodeTitle.Equals(titles, StringComparison.CurrentCultureIgnoreCase))
-        //                   .OrderBy(s => s.EpisodeTitle)
-        //                   .ToList();
-        //}
+        public Serie GetSerieIdByName(string title)
+        {
+            return _context.Series.Where(f => f.SerieTitle == title).FirstOrDefault();
+        }
 
 
         public async Task<bool> SaveAllAsync()

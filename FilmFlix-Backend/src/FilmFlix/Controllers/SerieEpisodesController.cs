@@ -115,7 +115,7 @@ namespace FilmFlix.Controllers
                 var serieById = _repo.GetSerie(id);
                 if (serieById == null) return NotFound($"serieById {id} was not found");
 
-                var serieEpisode = serieById.SerieEpisodes.Where(ss => ss.EpisodeTitle.ToLower() == title)
+                var serieEpisode = serieById.SerieEpisodes.Where(se => se.EpisodeTitle.ToLower() == title.ToLower())
                                                          .FirstOrDefault();
                 if (serieEpisode == null) return NotFound($"{serieEpisode.EpisodeTitle} was not found");
 

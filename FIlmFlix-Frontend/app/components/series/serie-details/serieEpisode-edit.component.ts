@@ -29,6 +29,7 @@ export class EditEpisodeComponent implements OnInit {
 
     episodeForm: FormGroup;
     //When private episodeForm.controls.* is needed in template
+    private oldEpisodeTitle: FormControl;
     private episodeTitle: FormControl;
     private resourceUrl: FormControl;
     private length: FormControl;
@@ -42,12 +43,14 @@ export class EditEpisodeComponent implements OnInit {
 
     initForm() {
 
+        this.oldEpisodeTitle = new FormControl(this.serieEpisode.episodeTitle, Validators.required);
         this.episodeTitle = new FormControl(this.serieEpisode.episodeTitle, Validators.required);
         this.resourceUrl = new FormControl(this.serieEpisode.resourceUrl, Validators.required);
         this.length = new FormControl(this.serieEpisode.length, Validators.required);
 
         //name, imageUrl etc matches formcontrol in html
         this.episodeForm = new FormGroup({
+            oldEpisodeTitle: this.oldEpisodeTitle,
             episodeTitle: this.episodeTitle,
             resourceUrl: this.resourceUrl,
             length: this.length

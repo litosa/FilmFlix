@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FilmFlix.Controllers
@@ -96,13 +95,15 @@ namespace FilmFlix.Controllers
             return BadRequest();
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] SerieViewModel model)
+        [HttpPut("{title}")]
+        public async Task<IActionResult> Put(string title, [FromBody] SerieViewModel model)
         {
             try
             {
-                Serie oldSerie = _repo.GetSerie(id);
-                if (oldSerie == null) return NotFound($"Could not find a serie with an EpisodeId of {id}");
+                int serieIdByName = _repo.GetSerieIdByName(title).SerieId;
+
+                Serie oldSerie = _repo.GetSerie(serieIdByName);
+                if (oldSerie == null) return NotFound($"Could not find a serie with an EpisodeId of {title}");
 
                 //Replaces the code below, Illustrate advantage of using mapping
                 _mapper.Map(model, oldSerie);
@@ -120,13 +121,15 @@ namespace FilmFlix.Controllers
             return BadRequest("Couldn´t update Serie");
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{title}")]
+        public async Task<IActionResult> Delete(string title)
         {
             try
             {
-                Serie oldSerie = _repo.GetSerie(id);
-                if (oldSerie == null) return NotFound($"Could not find Serie with EpisodeId of {id}");
+                int serieIdByName = _repo.GetSerieIdByName(title).SerieId;
+
+                Serie oldSerie = _repo.GetSerie(serieIdByName);
+                if (oldSerie == null) return NotFound($"Could not find Serie with EpisodeId of {title}");
 
                 _repo.Delete(oldSerie);
                 if (await _repo.SaveAllAsync())

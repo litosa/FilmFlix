@@ -17,7 +17,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
                 </i>
             </h5>
             <img class="img-responsive" style="margin-bottom:15px;" src="{{serie.imageUrl}}">
-            <a *ngIf="auth.isAuthenticated()" class="btn btn-danger" id="deleteSerie" (click)="deleteSerie($event)">Delete Serie</a>
         </div>
         <div *ngIf="!serie"><p>Serie Is Not Available</p></div>
     `,
@@ -35,17 +34,5 @@ export class SerieThumbnailComponent {
     series: Serie[];
 
     constructor(private serieService: SerieService, private auth: AuthService) { }
-
-    deleteSerie(event) {
-
-        event.stopPropagation();
-
-        if (event.target.id == 'deleteFilm') {
-
-            this.series = this.serieService.series;
-            let index = this.series.indexOf(this.serie);
-            this.serieService.deleteSerie(index);
-        }
-    }
 
 }

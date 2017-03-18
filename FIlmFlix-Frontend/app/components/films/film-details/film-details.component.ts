@@ -3,7 +3,7 @@ import { Category } from '../../enums/category';
 import { Film } from '../../models/film';
 import { Subscription } from 'rxjs/Rx';
 import { FilmService } from '../../services/film.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 
@@ -25,9 +25,12 @@ export class FilmDetailsComponent implements OnInit {
     editMode: boolean = false;
     filteredFilm: Film;
     filteredEditFilm: Film;
+    filmUpdateTitle: string;
 
     constructor(private filmService: FilmService,
-        private route: ActivatedRoute, private auth: AuthService) { }
+        private route: ActivatedRoute,
+        private auth: AuthService,
+        private router: Router) { }
 
     ngOnInit() {
         this.subscription = this.route.params.subscribe(
@@ -56,9 +59,14 @@ export class FilmDetailsComponent implements OnInit {
         this.editMode = true;
     }
 
+    deleteFilm() {
+        this.filmService.deleteFilm(this.filteredFilm);
+        this.router.navigate(['/films']);
+    }
 
     editCurrentFilm(film: Film) {
-        
+
+        this.filmUpdateTitle = this.filteredFilm.filmTitle;
         this.filteredFilm = film;
 
         var categoryByName = this.keys();
@@ -71,7 +79,7 @@ export class FilmDetailsComponent implements OnInit {
             }
         }
 
-        this.filmService.updateFilm(this.filteredFilm);
+        this.filmService.updateFilm(this.filmUpdateTitle, this.filteredFilm);
         this.editMode = false;
     }
 

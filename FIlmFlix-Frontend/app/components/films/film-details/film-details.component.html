@@ -19,6 +19,7 @@
     <div class="row" *ngIf="auth.isAuthenticated()">
         <div class="col-sm-6" style="margin-top: 15px; margin-bottom: 15px;">
             <a class="btn btn-warning" (click)="editFilm()">Edit Film</a>
+            <a *ngIf="auth.isAuthenticated()" class="btn btn-danger" (click)="deleteFilm()">Delete Film</a>
         </div>
     </div>  
     

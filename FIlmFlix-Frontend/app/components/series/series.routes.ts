@@ -14,9 +14,3 @@ export const SERIE_ROUTES: Routes = [
     { path: ':serieTitle', component: SerieDetailsComponent },
     // { path: 'serieEpisode/new', component: CreateEpisodeComponent }
 ];
-
-
-
-    // { path: '404', component: Error404Component },
-    // { path: '', redirectTo: '/series', pathMatch: 'full' },
-    // { path: '**', component: Error404Component },    

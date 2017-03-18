@@ -62,23 +62,14 @@ export class FilmsListComponent implements OnInit {
     sortBy: string = 'votes';
 
     ngOnInit() {
-        debugger;
         this.films = this.filmService.films;
-
         this.filteredFilms = this.films.slice(0);
         this.sortBy === this.sortBy ? this.filteredFilms.sort(sortByVotesDesc) : this.filteredFilms.sort(sortByNameAsc)
     }
 
-    // toggleVote(film: Film) {
-    //     if(this.userHasVoted(film)) {
-    //         this.voterService.deleteVoter(film, )
-    //     }
-    // }
-
     sortFilms(value: string) {
         this.sortBy === value ? this.filteredFilms.sort(sortByVotesDesc) : this.filteredFilms.sort(sortByNameAsc)
     }
-
 
     filterFilms(filter) {
 

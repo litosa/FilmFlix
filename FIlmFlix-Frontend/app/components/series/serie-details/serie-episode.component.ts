@@ -21,11 +21,13 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 export class SerieEpisodeComponent implements OnInit, OnChanges {
 
     @Input() serieEpisode: SerieEpisode;
+    private test: SerieEpisode;
 
 
     constructor() { }
 
     ngOnInit() {
+        
     }
 
     ngOnChanges(changes) {

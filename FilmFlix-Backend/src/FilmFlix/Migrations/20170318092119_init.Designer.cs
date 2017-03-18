@@ -8,7 +8,7 @@ using FilmFlix.Context;
 namespace FilmFlix.Migrations
 {
     [DbContext(typeof(VideoContext))]
-    [Migration("20170312203314_init")]
+    [Migration("20170318092119_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

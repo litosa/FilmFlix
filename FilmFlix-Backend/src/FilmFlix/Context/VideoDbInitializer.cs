@@ -64,7 +64,7 @@ namespace FilmFlix.Context
                         FilmTitle = "Batman v Superman: Dawn of Justice",
                         Description = "interna konflikten mellan två av jordens största superhjältar trappas upp.",
                         Category = Category.ScienceFiction,
-                        ImageUrl = "http://dreamfilmhd.sh/images/imdb/0080684.jpg",
+                        ImageUrl = "http://dreamvtt.com/imagehost/data/uploads/users/d9df2267-60c6-43fe-91f3-1d8f1b7ef601/1180512488.jpg",
                         Voters = 5,
                         Length = 151,
                         Published = DateTime.Now,

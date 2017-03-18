@@ -1,3 +1,5 @@
+import { HomepageComponent } from './components/common/homepage';
+import { SerieEpisodeService } from './components/services/serieEpisode.service';
 import { ModalTriggerDirective } from './components/common/modal-trigger.directive';
 import { JQ_TOKEN } from './components/common/jQuery.service';
 import { SearchModalComponent } from './components/common/search-modal.component';
@@ -69,13 +71,15 @@ declare let jQuery: Object;
         NavbarComponent,
         Error404Component,
         SearchModalComponent,
-        ModalTriggerDirective
+        ModalTriggerDirective,
+        HomepageComponent
     ],
     bootstrap: [VideosAppComponent],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         SerieService,
         FilmService,
+        SerieEpisodeService,
         { provide: TOASTR_TOKEN, useValue: toastr },
         { provide: JQ_TOKEN, useValue: jQuery },
         SerieRouteActivator,

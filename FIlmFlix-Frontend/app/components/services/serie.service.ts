@@ -1,4 +1,5 @@
-import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
+import { Headers, Http, Response } from '@angular/http';
 import { Category } from '../enums/category';
 import { Serie } from '../models/serie';
 import { EventEmitter, Injectable } from '@angular/core';
@@ -9,96 +10,84 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class SerieService {
 
     series: Serie[] = [];
+    seriesUrl: string = 'http://localhost:8088/api/series/';
+
 
     constructor(private http: Http) {
         this.getSeries();
     }
 
     getSeries() {
-        this.http.get('http://localhost:8088/api/series/')
+        this.http.get(this.seriesUrl)
             .map(response => <Serie[]>response.json())
             .subscribe(
-                data => this.series = data,
-                error => console.error(error)
+            data => this.series = data,
+            error => console.error(error)
             );
     }
 
+    setSeriesToLocalStorage(series: Serie[]){
+        localStorage.setItem("series", JSON.stringify(series));        
+    }
+
+    getSeriesFromLocalStorage() {
+        this.series = JSON.parse(localStorage.getItem("series"));
+    }
 
     getSerie(serieTitle: string) {
         return this.series.find(serie => serie.serieTitle.toLowerCase() == serieTitle.toLowerCase());
     }
 
-    saveSerie(serie: Serie) {
+    saveSerie(serie: Serie): Promise<Serie> {
         serie.serieEpisodes = [];
         //Convert Enum to number
         var category: Category = Category[serie.category.toString()];
         serie.category = category;
-        SERIES.push(serie);
+
+        this.series.push(serie);
+
+        const body = JSON.stringify(serie);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+
+        return this.http
+            .post(this.seriesUrl, body, { headers: headers })
+            .toPromise()
+            .then(res => res.json().data)
+            .catch(this.handleError);
     }
 
-    updateSerie(serie: Serie) {
-        let index = SERIES.findIndex(x => x.serieTitle == serie.serieTitle);
-        SERIES[index] = serie;
+    updateSerie(serieTitle: string, serie: Serie): Promise<Serie> {
+
+        let category: Category = Category[serie.category.toString()];
+        serie.category = category;
+
+        let index = this.series.findIndex(x => x.serieTitle == serieTitle);
+        this.series[index] = serie;
+
+        const body = JSON.stringify(serie);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+
+        return this.http
+            .put(this.seriesUrl + serieTitle, body, { headers: headers })
+            .toPromise()
+            .then(() => serie)
+            .catch(this.handleError);
     }
 
-    deleteSerie(index: number) {
-        SERIES.splice(index, 1);
+    deleteSerie(serie: Serie): Promise<void> {
+
+        let index = this.series.findIndex(x => x.serieTitle == serie.serieTitle);
+        this.series.splice(index, 1);
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+
+        return this.http.delete(this.seriesUrl + serie.serieTitle, { headers: headers })
+            .toPromise()
+            .then(() => null)
+            .catch(this.handleError);
+    }
+
+    private handleError(error: Response) {
+        return Observable.throw(error.statusText);
     }
 }
-
-const SERIES = [
-    {
-        "serieTitle": "Narcos",
-        "description": "A chronicled look at the criminal exploits of Colombian drug lord Pablo Escobar.",
-        "imageUrl": "http://dreamvtt.com/imagehost/data/uploads/users/d6f6fbc6-d319-4a61-b845-8dff671462d7/24174987.jpg",
-        "category": 0,
-        "voters": 5,
-        "serieEpisodes": [
-            {
-                "episodeTitle": "Avsnitt1",
-                "resourceUrl": "http://185.152.64.168/2grurw6f7bntzhru5377d6jzp24hdrierkaafwooatlbn6lm2ckvjbfyby6a/v.mp4",
-                "published": "2017-02-10T00:52:26.108081",
-                "length": 45
-            },
-            {
-                "episodeTitle": "Avsnitt2",
-                "resourceUrl": "http://185.152.64.168/2grurwgf7bntzhru5377d6lzphbtcbimfzmg4664uizccf7jo2b3zubp7qcq/v.mp4",
-                "published": "2017-02-10T00:52:26.108081",
-                "length": 45
-            },
-            {
-                "episodeTitle": "Avsnitt3",
-                "resourceUrl": "http://185.152.64.168/2grurxof7bntzhru5377dyrjnn5nnvrmi46pptjnzyw4jhu3rtvn5qpik6pq/v.mp4",
-                "published": "2017-02-10T00:52:26.108081",
-                "length": 45
-            }
-        ]
-    },
-    {
-        "serieTitle": "Hablo Escobar",
-        "description": "A chronicled look at the criminal exploits of Colombian drug lord Pablo Escobar.",
-        "imageUrl": "http://dreamvtt.com/imagehost/data/uploads/users/d6f6fbc6-d319-4a61-b845-8dff671462d7/24174987.jpg",
-        "category": 1,
-        "voters": 2,
-        "serieEpisodes": [
-            {
-                "episodeTitle": "Avsnitt1",
-                "resourceUrl": "http://185.152.64.168/2grurw6f7bntzhru5377d6jzp24hdrierkaafwooatlbnfgmkpsse4bcvera/v.mp4",
-                "published": "2017-02-10T00:52:26.108081",
-                "length": 45
-            },
-            {
-                "episodeTitle": "Avsnitt2",
-                "resourceUrl": "http://185.152.64.168/2grurwgf7bntzhru5377d6lzphbtcbimfzmg4664uizcc6sj6xz75mr6aa5a/v.mp4",
-                "published": "2017-02-10T00:52:26.108081",
-                "length": 45
-            },
-            {
-                "episodeTitle": "Avsnitt3",
-                "resourceUrl": "http://185.152.64.168/2grurxof7bntzhru5377dyrjnn5nnvrmi46pptjnzyw4j4z3b6ncsiyy34jq/v.mp4",
-                "published": "2017-02-10T00:52:26.108081",
-                "length": 45
-            }
-        ]
-    }
-]
